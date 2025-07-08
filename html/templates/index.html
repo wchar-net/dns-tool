@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>在线dns工具</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/32x32.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/16x16.ico">
+    <meta name="description" content="在线 DNS 工具,提供实时 DNS 查询和解析服务,支持多种记录类型的查询。">
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+
+<div class="nav_box">
+    <div class="nav_box_left">Dns工具</div>
+    <div class="nav_box_right">
+        <a target="_blank" href="https://github.com/wchar-net/dns-tool">
+            <svg height="32" aria-hidden="true" viewBox="0 0 24 24" version="1.1" width="32" data-view-component="true"
+                 class="octicon octicon-mark-github v-align-middle">
+                <path d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z"></path>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <div style="text-align:center">
+        <h2>Dns 工具</h2>
+    </div>
+    <div class="domaind" style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;margin-left: -120px">
+        <div class="domainLabel" style="display: inline-block;width: 120px;text-align: right">域名:</div>
+        <div style="display: inline-block;margin-left: 15px">
+            <input type="text" class="form-control" id="inputDomain" placeholder="请输入域名">
+        </div>
+    </div>
+    <div class="cusDomain"
+         style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;margin-left: -120px">
+        <div class="cusDomainLabel" style="display: inline-block;width: 120px;text-align: right">自定义Dns服务器:</div>
+        <div style="display: inline-block;margin-left: 15px">
+            <input type="text" class="form-control" id="inputCusDns"
+                   placeholder="自定义Dns服务器,可为空,当前只支持ipv4">
+        </div>
+    </div>
+
+    <div style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;">
+        <button class="btn btn-primary" id="btn_query">查询</button>
+    </div>
+
+
+    <div style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;">
+        <label class="radio-inline">
+            <input type="radio" name="record_type" id="inlineRadio1" value="a" checked>A
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type" id="inlineRadio2" value="aaaa">AAAA
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type" id="inlineRadio3" value="cname">CNAME
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type" id="inlineRadio4" value="ns">NS
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type" id="inlineRadio5" value="txt">TXT
+        </label>
+    </div>
+
+    <div style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;"></div>
+    <div class="text-center" style="margin-top: 20px;margin-bottom: 20px">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox" id="dns_google" value="google" checked>Google dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox" id="dns_open" value="open" checked>Open Dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox" id="dns_cloudflare" value="cloudflare">Cloudflare Dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox" id="dns_ali" value="ali">阿里 Dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox" id="dns_114" value="114">114 Dns
+        </label>
+    </div>
+    <div class="table-responsive">
+        <table id="resp_data_table" class="table table-bordered">
+            <thead>
+            <tr>
+                <td>DNS服务商</td>
+                <td>响应类型</td>
+                <td>响应IP</td>
+                <td>TTL值</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div style="
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+">
+        <div style="flex-grow: 1; height: 1px; background-color: #337ab7;"></div>
+        <span style="padding: 0 15px; font-weight: bold; color: #555;">分割线</span>
+        <div style="flex-grow: 1; height: 1px; background-color: #337ab7;"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div style="text-align:center">
+        <h2>Dnssec 查询</h2>
+    </div>
+    <div class="secDomainp" style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;margin-left: -120px">
+        <div class="secDomainLabel" style="display: inline-block;width: 120px;text-align: right;vertical-align: middle;">域名:</div>
+        <div class="secDomainBox" style="display: inline-block;margin-left: 15px;vertical-align: middle;">
+            <input type="text" class="form-control" id="inputDomainSec"
+                   style="display: inline-block;vertical-align: middle;" placeholder="请输入域名">
+            <button class="btn btn-primary" id="btn_query_sec" style="margin-left: 15px">查询</button>
+        </div>
+    </div>
+
+    <div style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;">
+        <label class="radio-inline">
+            <input type="radio" name="record_type_sec" id="inlineRadioSec1" value="a" checked>A
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type_sec" id="inlineRadioSec2" value="aaaa">AAAA
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type_sec" id="inlineRadioSec3" value="cname">CNAME
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type_sec" id="inlineRadioSec4" value="ns">NS
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="record_type_sec" id="inlineRadioSec5" value="txt">TXT
+        </label>
+    </div>
+
+    <div style="color: #333;text-align: center;vertical-align: middle;margin-top: 20px;"></div>
+    <div class="text-center" style="margin-top: 20px;margin-bottom: 20px">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox_sec" id="dns_google_sec" value="google">Google dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox_sec" id="dns_open_sec" value="open">Open Dns
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="dns-checkbox_sec" id="dns_cloudflare_sec" value="cloudflare" checked>Cloudflare
+            Dns
+        </label>
+    </div>
+    <div class="sec_box" id="sec_box">
+        <textarea readonly id="resp_data_text_sec" class="terminal-textarea" placeholder="等待查询..."></textarea>
+    </div>
+
+</div>
+
+
+<div class="container" style="margin-top: 20px;">
+    <div>
+        <p>一些公共dns:</p>
+
+        <div class="table-responsive">
+            <table class="table  table-bordered common-dns ">
+                <thead>
+                <tr>
+                    <td>名称</td>
+                    <td>ip地址</td>
+                    <td>官网</td>
+                    <td>描述</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Google Dns</td>
+                    <td>8.8.8.8<br/>8.8.4.4<br/>2001:4860:4860::8888<br/>2001:4860:4860::8844</td>
+                    <td><a href=" https://dns.google" class="text-primary" target="_blank">https://dns.google</a>
+                    </td>
+                    <td>Google 提供的公共 DNS 服务</td>
+                </tr>
+                <tr>
+                    <td>OpenDNS</td>
+                    <td>208.67.222.222<br/>208.67.220.220<br/>2620:119:35::35<br/>2620:119:53::53</td>
+                    <td><a href="https://www.opendns.com" class="text-primary"
+                           target="_blank">https://www.opendns.com</a>
+                    </td>
+                    <td>提供快速、可靠的 DNS 服务，具有恶意网站拦截和内容过滤功能。</td>
+                </tr>
+                <tr>
+                    <td>Cloudflare DNS</td>
+                    <td>1.1.1.1<br/>1.0.0.1<br/>2606:4700:4700::1111<br/>2606:4700:4700::1001</td>
+                    <td><a href="https://www.cloudflare.com/learning/dns/what-is-1.1.1.1/" class="text-primary"
+                           target="_blank">https://www.cloudflare.com/learning/dns/what-is-1.1.1.1/</a></td>
+                    <td>Cloudflare 提供的快速、安全、无日志的 DNS 服务，强调隐私保护。</td>
+                </tr>
+                <tr>
+                    <td>阿里云 DNS</td>
+                    <td>223.5.5.5<br/>223.6.6.6<br/>2400:3200::1<br/>2400:3200::2</td>
+                    <td><a href="https://dns.aliyun.com" class="text-primary"
+                           target="_blank">https://dns.aliyun.com</a></td>
+                    <td>阿里云提供的高性能、高可用的 DNS 服务，适用于国内用户。</td>
+                </tr>
+                <tr>
+                    <td>114 DNS</td>
+                    <td>114.114.114.114<br/>114.114.115.115<br/>2400:3200:2400:1:1:1:1:1<br/>2400:3200:2400:1:1:1:1:2
+                    </td>
+                    <td><a href="https://www.114dns.com" class="text-primary"
+                           target="_blank">https://www.114dns.com</a></td>
+                    <td>114 提供的国内 DNS 服务，支持恶意网站拦截和 DDoS 防护。</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div style="
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+">
+        <div style="flex-grow: 1; height: 1px; background-color: #337ab7;"></div>
+        <span style="padding: 0 15px; font-weight: bold; color: #555;">分割线</span>
+        <div style="flex-grow: 1; height: 1px; background-color: #337ab7;"></div>
+    </div>
+
+
+    <footer>
+        <p>© <a target="_blank" href="https://wchar.net">宽字符</a> 2025</p>
+    </footer>
+
+</div>
+
+<script src="/static/lib/jquery/jquery.min.js"></script>
+<script src="/static/lib/bootstrap/bootstrap.min.js"></script>
+<script src="/static/lib/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/index.js"></script>
+</body>
+</html>

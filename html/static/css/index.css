@@ -1,0 +1,218 @@
+.nav_box {
+    width: 100%;
+    height: 50px;
+    color: #5e5e5e;
+    background-color: #f8f8f8;
+    border: 1px solid #e7e7e7;
+}
+
+.nav_box_left {
+    font-weight: bold;
+    font-size: 1.5em;
+    float: left;
+    width: 100px;
+    height: 100%;
+    text-align: center;
+    /* 水平居中 */
+    line-height: 50px;
+    /* 垂直居中 */
+}
+
+.nav_box_right {
+    vertical-align: middle;
+    float: right;
+    height: 100%;
+    line-height: 50px;
+}
+
+.nav_box_right svg {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+#inputDomain,
+#inputCusDns {
+    width: 300px;
+}
+
+/* 中等屏幕 (992px 到 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .cusDomain {
+        margin-left: 0 !important;
+    }
+
+    .cusDomainLabel {
+        width: 100% !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+}
+
+/* 平板端 (768px 到 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .cusDomain {
+        margin-left: 0 !important;
+    }
+
+    .cusDomainLabel {
+        width: 100% !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+}
+
+/* 手机端 (小于 768px) */
+@media (max-width: 767px) {
+    .cusDomain {
+        margin-left: 0 !important;
+    }
+
+    .domaind {
+        margin-left: 0 !important;
+    }
+
+    .secDomainp {
+        margin-left: 0 !important;
+    }
+
+
+    .cusDomainLabel {
+        width: 100% !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+    .domainLabel {
+        width: 100% !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+    .secDomainLabel {
+        width: 100% !important;
+        text-align: center !important;
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+    #inputDomainSec {
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+    #btn_query_sec {
+        margin-left: 0px !important;
+    }
+    .secDomainBox{
+         margin-left: 0px !important;
+    }
+}
+
+#resp_data_table thead tr td,
+#resp_data_table tbody tr td {
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+.common-dns thead tr td,
+.common-dns tbody tr td {
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+
+#inputDomainSec,
+#inputCusDnsSec {
+    width: 300px;
+}
+
+.sec_box {
+    text-align: center !important;
+}
+
+
+/* textarea Windows 终端风格的 textarea 样式 */
+.terminal-textarea {
+    /* 基本外观 */
+    background-color: #0C0C0C;
+    /* Windows 终端的深黑色背景 */
+    color: #CCCCCC;
+    /* 浅灰色文字 */
+    font-family: 'Consolas', 'Courier New', monospace;
+    /* Windows 终端常用等宽字体 */
+    font-size: 14px;
+    padding: 15px;
+    border: 1px solid #252525;
+    /* 低调灰色边框 */
+    border-radius: 4px;
+    /* 轻微圆角，符合 Windows 终端风格 */
+    width: 100%;
+    min-height: 150px;
+    resize: vertical;
+    /* 允许垂直调整大小 */
+    outline: none;
+    /* 移除默认焦点边框 */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    /* 微妙阴影 */
+    white-space: pre;
+    /* 防止文本换行 */
+    overflow-x: auto;
+    /* 启用水平滚动条 */
+}
+
+/* 聚焦效果 */
+.terminal-textarea:focus {
+    border-color: #4B4B4B;
+    /* 聚焦时稍亮的灰色边框 */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    /* 微妙白色光晕 */
+}
+
+/* 占位符样式 */
+.terminal-textarea::placeholder {
+    color: #666666;
+    /* 深灰色占位符 */
+    opacity: 1;
+}
+
+/* 模拟终端光标 */
+@keyframes blink {
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+.terminal-textarea {
+    border-right: 2px solid #CCCCCC;
+    /* 白色光标，与文字颜色一致 */
+    animation: blink 0.7s step-end infinite;
+}
+
+/* 自定义滚动条样式，模仿 Windows 终端 */
+.terminal-textarea::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+.terminal-textarea::-webkit-scrollbar-track {
+    background: #1A1A1A;
+    /* 深色轨道 */
+}
+
+.terminal-textarea::-webkit-scrollbar-thumb {
+    background: #4B4B4B;
+    /* 灰色滑块，简洁优雅 */
+    border-radius: 5px;
+    border: 2px solid #0C0C0C;
+    /* 与背景色一致的边框 */
+}
+
+.terminal-textarea::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+    /* 悬停时稍亮 */
+}
